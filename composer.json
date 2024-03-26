@@ -1,0 +1,22 @@
+{
+    "name": "hgati/module-currencyapi-converter",
+    "description": "This is magento 2 module which provides usage of currencyapi.com converter API.",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Dennis Lee",
+            "email": "cobays@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Hgati\\CurrencyConverter\\": ""
+        }
+    }
+}
