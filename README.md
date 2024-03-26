@@ -1,5 +1,5 @@
 # CurrencyConverter for Magento2
-`composer require hgati/module-currencyapi`
+`composer require hgati/module-currencyapi:dev-master`
 
 ## Main Functionalities
 This is magento 2 module which provides integration of free currency converter(currencyapi.net) API.
