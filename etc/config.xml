@@ -5,6 +5,7 @@
 			<currencyapi>
 				<api_key/>
 				<timeout>100</timeout>
+				<conversion_fee>3</conversion_fee>
 			</currencyapi>
 		</currency>
 	</default>

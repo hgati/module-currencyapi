@@ -119,29 +119,33 @@ class FreeCurrencyApiConverter extends \Magento\Directory\Model\Currency\Import\
         }
 
         $response = $response['data'];
-        // $response = [ 
-        //     'AUD' => ['code' => 'AUD', 'value' => 2.0528424423 ],
-        //     'KRW' => ['code' => 'KRW', 'value' => 1324.0528424423 ],
-        //     ...
-        // ];
+
+        // Get conversion fee rate from config
+        $feeRate = (float)$this->scopeConfig->getValue(
+            'currency/currencyapi/conversion_fee',
+            ScopeInterface::SCOPE_STORE
+        );
+
         foreach ($currenciesTo as $to) {
             if ($currencyFrom === $to) {
                 $data[$currencyFrom][$to] = $this->_numberFormat(1);
             } else {
                 if (!isset($response[$to])) {
-                    $serviceHost =  $this->getServiceHost($url);
+                    $serviceHost = $this->getServiceHost($url);
                     $this->_messages[] = __('We can\'t retrieve a rate from %1 for %2.', $serviceHost, $to);
                     $data[$currencyFrom][$to] = null;
                 } else {
-                    $data[$currencyFrom][$to] = $this->_numberFormat(
-                        (double)$response[$to]['value']
-                    );
+                    // Apply conversion fee rate
+                    $rate = (double)$response[$to]['value'];
+                    $rateWithFee = $rate * (1 + $feeRate / 100);
+                    $data[$currencyFrom][$to] = $this->_numberFormat($rateWithFee);
                 }
             }
         }
 
         return $data;
     }
+
 
     /**
      * Get currency converter service host.
